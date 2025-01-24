@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talking Avatar</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: transparent;
+            overflow: hidden;
+        }
+
+        /* Style for the iframe containing the Discord Streamkit overlay */
+        iframe#streamkit {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+        }
+
+        /* Hide all avatars except the specific Discord ID */
+        img.Voice_avatar__htiqH:not([src*="79113755375435776"]) {
+            display: none;
+        }
+
+        /* Hide the original avatar for the target user */
+        img.Voice_avatar__htiqH[src*="79113755375435776"] {
+            display: none;
+        }
+
+        /* Default (idle) WebM */
+        video#idle-avatar {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: auto;
+            z-index: 1;
+            filter: brightness(50%);
+        }
+
+        /* Talking (speaking) WebM */
+        video#talking-avatar {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: auto;
+            z-index: 2;
+            filter: brightness(100%);
+            animation: bounce 1s infinite;
+        }
+
+        /* When speaking, switch the visible WebM */
+        img.Voice_avatarSpeaking__lE+4m[src*="79113755375435776"] ~ video#idle-avatar {
+            display: none;
+        }
+
+        img.Voice_avatarSpeaking__lE+4m[src*="79113755375435776"] ~ video#talking-avatar {
+            display: block;
+        }
+
+        /* Bounce animation for talking state */
+        @keyframes bounce {
+            0% { transform: translate(-50%, calc(-50% + 0px)); }
+            15% { transform: translate(-50%, calc(-50% - 10px)); }
+            30% { transform: translate(-50%, calc(-50% + 0px)); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Embed Discord Streamkit overlay -->
+    <iframe 
+        id="streamkit" 
+        src="https://streamkit.discord.com/overlay/voice/566352636320940062/707205116943532124?icon=true&online=true&logo=white&text_color=%23ffffff&text_size=14&text_outline_color=%23000000&text_outline_size=0&text_shadow_color=%23000000&text_shadow_size=0&bg_color=%231e2124&bg_opacity=0.95&bg_shadow_color=%23000000&bg_shadow_size=0&invite_code=&limit_speaking=true&small_avatars=false&hide_names=false&fade_chat=0&streamer_avatar_first=false">
+    </iframe>
+
+    <!-- Default (idle) WebM -->
+    <video id="idle-avatar" autoplay loop muted>
+        <source src="https://cdn.discordapp.com/attachments/453136429590118400/1329900183063892019/Vincent.webm" type="video/webm">
+    </video>
+
+    <!-- Talking (speaking) WebM -->
+    <video id="talking-avatar" autoplay loop muted>
+        <source src="https://cdn.discordapp.com/attachments/453136429590118400/1329894315530649680/Baby_final.webm" type="video/webm">
+    </video>
+</body>
+</html>
